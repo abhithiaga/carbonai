@@ -29,10 +29,6 @@ cp backend/.env.example backend/.env
 cd infrastructure
 docker-compose up --build
 ```
-- Backend API: http://localhost:8000
-- API Docs (Swagger): http://localhost:8000/docs
-- Frontend Dashboard: http://localhost:8050
-
 ### 3. Run without Docker
 
 **Backend:**
