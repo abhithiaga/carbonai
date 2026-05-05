@@ -1,4 +1,4 @@
-# 🌱 CarbonAI — Sustainability Optimization Platform
+# CarbonAI
 
 AI-driven carbon footprint tracking, scoring, and LLM-powered recommendations.
 
@@ -14,7 +14,7 @@ AI-driven carbon footprint tracking, scoring, and LLM-powered recommendations.
 
 ---
 
-## 🚀 Quick Start (Local Dev)
+## Local Dev
 
 ### 1. Clone & configure
 ```bash
@@ -51,34 +51,6 @@ pip install -r requirements.txt
 python src/app.py
 ```
 
----
-
-## 📁 Project Structure
-```
-carbonai/
-├── backend/
-│   ├── app/
-│   │   ├── main.py           # FastAPI app entry point
-│   │   ├── config.py         # Settings from .env
-│   │   ├── models/           # Pydantic data models
-│   │   ├── routers/          # API route handlers
-│   │   ├── services/         # Business logic + LLM
-│   │   └── utils/            # JWT, hashing helpers
-│   ├── handler.py            # AWS Lambda entry (Mangum)
-│   └── requirements.txt
-├── frontend/
-│   └── src/
-│       ├── app.py            # Dash app + routing
-│       ├── pages/            # Dashboard, Emissions, Recommendations, Scoring
-│       └── components/       # Charts, Sidebar, Cards
-├── infrastructure/
-│   ├── docker-compose.yml    # Local dev
-│   └── serverless.yml        # AWS Lambda deployment
-└── README.md
-```
-
----
-
 ## ☁️ Deploy to AWS
 
 ### Prerequisites
@@ -103,7 +75,7 @@ Options:
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -117,23 +89,4 @@ Options:
 | POST | `/api/scoring/score` | Sustainability score |
 | GET  | `/api/scoring/leaderboard` | Org leaderboard |
 
-Full interactive docs at `/docs` (Swagger) or `/redoc`.
-
----
-
-## 🔧 VS Code Setup
-
-Recommended extensions:
-- Python (ms-python.python)
-- Pylance
-- REST Client (humao.rest-client)
-- Docker
-
-Workspace settings (`.vscode/settings.json`):
-```json
-{
-  "python.defaultInterpreterPath": "./backend/.venv/bin/python",
-  "python.formatting.provider": "black",
-  "editor.formatOnSave": true
-}
 ```
