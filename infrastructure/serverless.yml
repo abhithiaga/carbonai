@@ -1,0 +1,71 @@
+service: carbonai-backend
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.11
+  region: us-east-1
+  memorySize: 512
+  timeout: 30
+  environment:
+    SECRET_KEY: ${env:SECRET_KEY}
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    EMISSIONS_TABLE: ${self:service}-emissions-${sls:stage}
+    USERS_TABLE: ${self:service}-users-${sls:stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - arn:aws:dynamodb:${aws:region}:*:table/${self:service}-*
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - httpApi:
+          path: /
+          method: ANY
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+    slim: true
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!.venv/**"
+    - "!tests/**"
+
+resources:
+  Resources:
+    EmissionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-emissions-${sls:stage}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: org_id
+            AttributeType: S
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: org_id
+            KeyType: HASH
+          - AttributeName: id
+            KeyType: RANGE
